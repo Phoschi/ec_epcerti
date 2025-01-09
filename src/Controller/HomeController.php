@@ -15,14 +15,14 @@ class HomeController extends AbstractController
     // Inject the repository via the constructor
     public function __construct(BookReadRepository $bookReadRepository)
     {
-        $this->bookReadRepository = $bookReadRepository;
+        $this->readBookRepository = $bookReadRepository;
     }
 
     #[Route('/', name: 'app.home')]
     public function index(): Response
     {
         $userId     = 1;
-        $booksRead  = $this->bookReadRepository->findByUserId($userId, false);
+        $booksRead  = $this->readBookRepository->findByUserId($userId, false);
 
         // Render the 'hello.html.twig' template
         return $this->render('pages/home.html.twig', [
