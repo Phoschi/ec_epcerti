@@ -24,6 +24,7 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('auth.login');
         }
 
+        /** @var \App\Entity\User $user */
         $booksRead = $this->readBookRepository->findByUserId($user->getId(), false);
 
         return $this->render('pages/home.html.twig', [
