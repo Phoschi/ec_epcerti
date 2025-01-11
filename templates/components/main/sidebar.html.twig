@@ -73,11 +73,8 @@
                                 src="{{ asset('metronic/media/avatars/300-2.png') }}">
                             <div class="flex flex-col gap-1.5">
                             <span class="text-sm text-gray-800 font-semibold leading-none">
-                                John Doe
+                                {{ app.user.email }}
                             </span>
-                                <span class="text-xs text-gray-600 font-medium leading-none">
-                                    john.doe@gmail.com
-                                </span>
                             </div>
                         </div>
                     </div>
@@ -138,8 +135,8 @@
                         </div>
                         <div class="menu-item px-4 py-1.5">
                             <a class="btn btn-sm btn-light justify-center"
-                               href="#">
-                                Me déconnecer
+                               href="{{ path('auth.logout') }}">
+                                Me déconnecter
                             </a>
                         </div>
                     </div>
