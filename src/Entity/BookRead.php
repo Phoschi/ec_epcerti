@@ -55,6 +55,11 @@ class BookRead
         return $this;
     }
 
+    public function setUser($user): void
+    {
+        $this->user_id = $user->getId();
+    }
+
     public function getBookId(): ?string
     {
         return $this->book_id;
@@ -91,16 +96,15 @@ class BookRead
         return $this;
     }
 
-    public function isRead(): ?bool
+    public function setIsRead(bool $isRead): self
     {
-        return $this->is_read;
+        $this->is_read = $isRead;
+        return $this;
     }
 
-    public function setRead(bool $is_read): static
+    public function getIsRead(): ?bool
     {
-        $this->is_read = $is_read;
-
-        return $this;
+        return $this->is_read;
     }
 
     public function getCover(): ?string
