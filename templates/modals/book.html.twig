@@ -11,8 +11,13 @@
                         <div class="flex flex-col gap-1">
                             <label for="book" class="form-label font-normal text-gray-900">Livre</label>
                             <select id="book" class="select">
-                                <option>Livre 1</option>
-                                <option>Livre 2</option>
+                                {% if allBooks is empty %}
+                                    <option value="">Aucun livre disponible</option> <!-- Display a message if no books are available -->
+                                {% else %}
+                                    {% for book in allBooks %}
+                                        <option value="{{ book.id }}">{{ book.name }}</option> <!-- Populate the dropdown with book options -->
+                                    {% endfor %}
+                                {% endif %}
                             </select>
                         </div>
 
@@ -42,16 +47,55 @@
                         <div class="flex flex-col gap-1">
                             <label class="switch">
                                 <span class="switch-label font-normal text-gray-900">Lecture terminée</span>
-                                <input name="check" type="checkbox" value="0"/>
+                                <input name="is_read" type="checkbox" value="1"/>
                             </label>
                         </div>
 
                         <div class="flex">
-                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            <button id="submit-button" type="submit" class="btn btn-primary">Enregistrer</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    
+    <script> // this feature doesn't work, need to be fixed.
+        document.getElementById('submit-button').addEventListener('click', function(event) {
+            event.preventDefault();  // Prevent the default form submission
+            const bookId = document.getElementById('book').value;  // Get the selected book ID
+            const rating = document.querySelector('select[name="rating"]').value;  // Get the selected rating
+            const description = document.querySelector('textarea[name="description"]').value;  // Get the description text
+            const isRead = document.querySelector('input[name="is_read"]:checked') ? document.querySelector('input[name="is_read"]:checked').value : 0;  // Get the read status (checked or not)
+
+            const bookData = {
+                book_id: bookId,
+                rating: rating,
+                description: description,
+                is_read: isRead
+            };  // Create an object to hold the book data
+
+            console.log('Données du livre à envoyer:', bookData);  // Log the book data to the console
+
+            fetch('/add-reading', {  // Send the book data to the server
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bookData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Réponse du serveur:', data);  // Log the server response
+                if (data.status === 'success') {
+                    alert('Lecture ajoutée avec succès !');  // Alert the user on success
+                } else {
+                    console.error('Error:', data);
+                }
+            })
+            .catch((error) => {
+                console.error('Fetch error:', error);  // Log any fetch errors
+            });
+        });
+    </script>
 </div>

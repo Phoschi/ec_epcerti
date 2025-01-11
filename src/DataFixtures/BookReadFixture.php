@@ -90,7 +90,7 @@ class BookReadFixture extends Fixture
             $bookRead->setUserId($item['user_id']);
             $bookRead->setBookId($item['book_id']);
             $bookRead->setRating($item['rating']);
-            $bookRead->setRead($item['is_read']);
+            $bookRead->setIsRead($item['is_read']);
             $bookRead->setDescription($item['description']);
             $bookRead->setCreatedAt($now);
             $bookRead->setUpdatedAt($now);
